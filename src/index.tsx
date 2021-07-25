@@ -3,14 +3,21 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import { store } from './app/store';
-import { Provider } from 'react-redux';
+import { Provider as ReduxProvider } from 'react-redux';
+import { Provider as UrqlProvider, createClient } from 'urql';
 import * as serviceWorker from './serviceWorker';
+
+const client = createClient({
+  url: 'https://rickandmortyapi.com/graphql',
+});
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <ReduxProvider store={store}>
+      <UrqlProvider value={client}>
+        <App />
+      </UrqlProvider>
+    </ReduxProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

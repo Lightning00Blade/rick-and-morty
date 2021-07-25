@@ -1,57 +1,83 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
-import './App.css';
+import { Button } from '@material-ui/core';
+import { BrowserRouter as Router, Switch, Route, Redirect, Link, RouteProps } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from './app/hooks';
+import { logout, selectLoggedIn, selectUser } from './features/user/userSlice';
+import { LoginPage } from './views/Login.view';
+import { Episodes } from './views/Episodes.view';
+import { Episode } from './views/Episode.view';
+import { Location } from './views/Location.view';
 
+export function ProtectedRoute({ ...routeProps }: RouteProps) {
+  const isLoggedIn = useAppSelector(selectLoggedIn);
+
+  if (isLoggedIn) {
+    return <Route {...routeProps} />;
+  } else {
+    return <Redirect to={{ pathname: '/login' }} />;
+  }
+}
+
+export function GuestRoute({ ...routeProps }: RouteProps) {
+  const isLoggedIn = useAppSelector(selectLoggedIn);
+
+  if (!isLoggedIn) {
+    return <Route {...routeProps} />;
+  } else {
+    return <Redirect to={{ pathname: '/' }} />;
+  }
+}
+
+// Can Use create a routes file then map over 2 filtered arrays - Guest and Protected
 function App() {
+  const dispatch = useAppDispatch();
+  const isLoggedIn = useAppSelector(selectLoggedIn);
+  const user = useAppSelector(selectUser);
+
+  const logoutFuction = () => {
+    dispatch(logout());
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
-    </div>
+    <Router>
+      {isLoggedIn && (
+        <nav>
+          <p>Your name is {user}!</p>
+          <ul>
+            <li>
+              <Link to='/'>Home</Link>
+            </li>
+            <li>
+              <Link to='/about'>About</Link>
+            </li>
+            <li>
+              <Button variant='contained' color='primary' onClick={logoutFuction}>
+                Logout
+              </Button>
+            </li>
+          </ul>
+        </nav>
+      )}
+      <div className='App'>
+        <section>
+          <Switch>
+            <GuestRoute exact path='/login'>
+              <LoginPage />
+            </GuestRoute>
+            <ProtectedRoute exact path='/'>
+              <Episodes />
+            </ProtectedRoute>
+            <ProtectedRoute path='/episode/:id'>
+              <Episode />
+            </ProtectedRoute>
+            <ProtectedRoute path='/location/:id'>
+              <Location />
+            </ProtectedRoute>
+          </Switch>
+        </section>
+
+        <footer></footer>
+      </div>
+    </Router>
   );
 }
 
