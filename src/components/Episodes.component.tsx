@@ -17,6 +17,7 @@ const AllEpisodesQuery = gql`
         id
         name
         air_date
+        episode
       }
     }
   }
@@ -26,6 +27,7 @@ export interface Episode {
   id: number;
   name: string;
   air_date: string;
+  episode: string;
 }
 
 export interface EpisodesQuery {
@@ -67,7 +69,7 @@ export const EpisodesComponent = () => {
         {data?.episodes.results.map((episode) => (
           <ListItem key={episode.id}>
             <Link to={`/episode/${episode.id}`}>
-              {episode.name} - {episode.air_date}
+              {episode.episode} - {episode.name} - {episode.air_date}
             </Link>
           </ListItem>
         ))}

@@ -13,3 +13,6 @@
 4. TypeScript
    1. Extract Types into a Module folder
    2. Use Partial for the Queries
+5. React Router
+   1. Extract all Routes into a Object
+   2. Use Filter into Map to sort and display them.
