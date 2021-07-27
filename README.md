@@ -26,3 +26,4 @@
 7. General
    1. Follow more React Guidelines - naming, structure, etc. (Currently following more Angular/Vue approach).
    2. Extract Pagination into a HOC maybe?
+   3. Integrate with GitHub Pages
