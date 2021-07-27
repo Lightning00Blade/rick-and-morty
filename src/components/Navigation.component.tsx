@@ -24,6 +24,11 @@ export const NavigationComponent = () => {
             </Button>
           </Grid>
           <Grid item>
+            <Button variant='contained' color='secondary' type='button'>
+              <Link to='/character'>Character Search</Link>
+            </Button>
+          </Grid>
+          <Grid item>
             <Button variant='contained' color='secondary' onClick={logoutHandler}>
               Logout
             </Button>

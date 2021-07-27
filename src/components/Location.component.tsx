@@ -76,7 +76,7 @@ export const LocationComponent = ({ id }: LocationComponentProps) => {
       </TableContainer>
       {data?.location.residents && (
         <>
-          <h1>Characters in this episode:</h1>
+          <h1>Characters in this location:</h1>
           <CharacterTable characters={data.location.residents} />
         </>
       )}

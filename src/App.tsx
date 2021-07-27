@@ -7,6 +7,7 @@ import { Episode } from './views/Episode.view';
 import { Location } from './views/Location.view';
 import { NavigationComponent } from './components/Navigation.component';
 import { Container } from '@material-ui/core';
+import { CharacterSearch } from './views/CharacterSearch.view';
 
 export function ProtectedRoute({ ...routeProps }: RouteProps) {
   const isLoggedIn = useAppSelector(selectLoggedIn);
@@ -44,6 +45,9 @@ function App() {
               </GuestRoute>
               <ProtectedRoute exact path='/'>
                 <Episodes />
+              </ProtectedRoute>
+              <ProtectedRoute path='/character/:name?'>
+                <CharacterSearch />
               </ProtectedRoute>
               <ProtectedRoute path='/episode/:id'>
                 <Episode />

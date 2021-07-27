@@ -30,14 +30,16 @@ export interface Episode {
   episode: string;
 }
 
+export interface PaginationInfo {
+  count: number;
+  pages: number;
+  next: number;
+  prev: number;
+}
+
 export interface EpisodesQuery {
   episodes: {
-    info: {
-      count: number;
-      pages: number;
-      next: number;
-      prev: number;
-    };
+    info: PaginationInfo;
     results: Episode[];
   };
 }
