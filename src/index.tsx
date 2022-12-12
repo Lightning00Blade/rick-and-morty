@@ -22,4 +22,5 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
+// Comment
 serviceWorker.unregister();
